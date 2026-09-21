@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "CjsV78imiP8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\philipp.sutter\\byte_lernjournalapp\\Luna-LernjournalApp\\LernjournalApp\\LernjournalApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\philipp.sutter\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.12\\microsoft.aspnetcore.app.internal.assets.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}

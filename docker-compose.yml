@@ -1,0 +1,47 @@
+version: "3.6"
+
+services:
+    mariadb:
+        container_name: mariadb
+        image: mariadb:10.6.10
+        env_file:
+            - ".env"
+        networks:
+            - lj_network
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./restore:/docker-entrypoint-initdb.d:ro
+            - db_data:/var/lib/mysql
+
+    phpmyadmin:
+        container_name: phpmyadmin
+        depends_on:
+            - mariadb
+        environment:
+            - PMA_HOST=mariadb
+        image: phpmyadmin/phpmyadmin:latest
+        networks:
+            - lj_network
+        ports:
+            - "8080:80"
+
+smartfarming_ui:
+    build:
+      context: .
+      dockerfile: LernjournalApp_UI/Dockerfile
+    networks:
+      - lj_network
+    container_name: LernjournalApp_UI
+    restart: always
+    ports:
+      - "5044:8080"
+    environment:
+      TZ: Europe/Zurich
+      ASPNETCORE_ENVIRONMENT: Staging
+
+networks:
+    lj_network:
+
+volumes:
+    db_data:
