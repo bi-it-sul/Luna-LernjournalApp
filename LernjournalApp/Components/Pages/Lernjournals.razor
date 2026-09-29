@@ -1,0 +1,73 @@
+﻿@page "/lernjournals"
+@rendermode InteractiveServer
+
+<PageTitle>Lernjournals</PageTitle>
+
+<div class="journal-workspace">
+    <aside class="journal-list" aria-label="Lernjournals">
+        @foreach (var journal in journals)
+        {
+            <button class="journal-list-item @(journal == selectedJournal ? "selected" : null)"
+                    @onclick="() => selectedJournal = journal"
+                    aria-pressed="@(journal == selectedJournal)">
+                <span class="journal-list-title">@journal.Title</span>
+                <span class="journal-list-date">@journal.Date</span>
+            </button>
+        }
+    </aside>
+
+    <article class="journal-detail" aria-live="polite">
+        <h1>@selectedJournal.Title</h1>
+        <p class="journal-detail-date">@selectedJournal.Date</p>
+
+        @foreach (var paragraph in selectedJournal.Paragraphs)
+        {
+            <p>@paragraph</p>
+        }
+    </article>
+</div>
+
+@code {
+    private readonly List<JournalEntry> journals =
+    [
+        new("Lernstrategien", "12.09.2026", [
+            "Heute habe ich verschiedene Lernstrategien ausprobiert und darauf geachtet, welche mir beim Verstehen neuer Inhalte am meisten helfen. Besonders hilfreich war es, den Stoff in kleinere Abschnitte aufzuteilen.",
+            "Danach habe ich die wichtigsten Ideen in eigenen Worten zusammengefasst. So konnte ich die Zusammenhänge besser erkennen und offene Fragen gezielt notieren."]),
+        new("Projektplanung", "10.09.2026", [
+            "Ich habe die nächsten Schritte für das Projekt gesammelt und nach Priorität geordnet. Mit einer klaren Reihenfolge fällt es leichter, den Überblick zu behalten.",
+            "Für die kommende Woche nehme ich mir vor, zuerst die Recherche abzuschliessen und danach einen ersten Entwurf zu erstellen."]),
+        new("Mathematik", "08.09.2026", [
+            "Heute habe ich Aufgaben zu linearen Funktionen bearbeitet. Die Beispiele aus dem Unterricht wurden verständlicher, nachdem ich die Rechenschritte selbst aufgeschrieben habe.",
+            "Bei Textaufgaben möchte ich künftig zuerst die gegebenen Informationen markieren, bevor ich mit dem Rechnen beginne."]),
+        new("Wissenschaftliches Arbeiten", "05.09.2026", [
+            "Ich habe mich mit der Bewertung von Quellen beschäftigt. Veröffentlichungsdatum, Autorenschaft und Belege geben wichtige Hinweise auf die Qualität.",
+            "Beim nächsten Mal prüfe ich Quellen direkt beim Lesen und halte die bibliografischen Angaben fest."]),
+        new("Englisch", "02.09.2026", [
+            "Neue Vokabeln bleiben besser hängen, wenn ich sie in eigenen Beispielsätzen verwende. Heute habe ich dafür eine kurze Zusammenfassung geschrieben.",
+            "Ich möchte die Wörter in den nächsten Tagen nochmals wiederholen, damit sie langfristig im Gedächtnis bleiben."]),
+        new("Präsentation", "29.08.2026", [
+            "Für die Präsentation habe ich die Hauptaussagen auf wenige Punkte reduziert. Eine klare Gliederung hilft dem Publikum, dem Thema zu folgen.",
+            "Beim Üben merke ich, dass kurze Pausen die Übergänge zwischen den Themen natürlicher machen."]),
+        new("Geschichte", "26.08.2026", [
+            "Eine Zeitleiste hat mir geholfen, die Ereignisse in den richtigen Zusammenhang zu bringen. Einzelne Daten sind leichter einzuordnen, wenn die Entwicklungen dazwischen sichtbar sind.",
+            "Als Nächstes vergleiche ich die unterschiedlichen Perspektiven auf das Thema."]),
+        new("Konzentration", "23.08.2026", [
+            "Kurze, geplante Pausen haben heute gut funktioniert. Ich konnte mich dadurch länger auf eine Aufgabe konzentrieren.",
+            "Am hilfreichsten war es, das Mobiltelefon während der Arbeitsphase ausser Reichweite zu legen."]),
+        new("Reflexion", "20.08.2026", [
+            "Diese Woche habe ich regelmässiger gelernt als zuvor. Das Aufteilen grosser Aufgaben in kleine Schritte hat den Einstieg erleichtert.",
+            "Für die nächste Woche setze ich mir wieder konkrete Tagesziele und lasse genug Zeit für Wiederholungen."]),
+        new("Erste Notizen", "17.08.2026", [
+            "Heute habe ich begonnen, meine Lernfortschritte festzuhalten. Schon wenige Notizen helfen dabei, Erfolge und offene Fragen später wiederzufinden.",
+            "Ich möchte dieses Journal nutzen, um meine Lerngewohnheiten besser kennenzulernen."])
+    ];
+
+    private JournalEntry selectedJournal = default!;
+
+    protected override void OnInitialized()
+    {
+        selectedJournal = journals[0];
+    }
+
+    private sealed record JournalEntry(string Title, string Date, string[] Paragraphs);
+}
